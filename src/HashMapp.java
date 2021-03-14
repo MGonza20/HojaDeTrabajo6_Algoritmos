@@ -15,7 +15,7 @@ public class HashMapp implements MAP {
 
     @Override
     public void add(String key, String value) {
-
+        value = value.toUpperCase();
         ArrayList<List<String>> lista = new ArrayList<>();
         ArrayList<String> lista2 = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[0])){
 
-                    bebidas.add(lista.get(i).get(1));
+                    bebidas.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), bebidas);
                 }
             }
@@ -55,7 +55,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[1])){
 
-                    frutas.add(lista.get(i).get(1));
+                    frutas.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), frutas);
                 }
             }
@@ -68,7 +68,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[2])){
 
-                    sillones.add(lista.get(i).get(1));
+                    sillones.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), sillones);
                 }
             }
@@ -81,7 +81,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[3])){
 
-                    condimentos.add(lista.get(i).get(1));
+                    condimentos.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), condimentos);
                 }
             }
@@ -94,7 +94,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[4])){
 
-                    lacteos.add(lista.get(i).get(1));
+                    lacteos.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), lacteos);
                 }
             }
@@ -107,7 +107,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[5])){
 
-                    carnes.add(lista.get(i).get(1));
+                    carnes.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), carnes);
                 }
             }
@@ -120,7 +120,7 @@ public class HashMapp implements MAP {
 
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[6])){
 
-                    mueblesT.add(lista.get(i).get(1));
+                    mueblesT.add(lista.get(i).get(1).toUpperCase());
                     HM.put(lista.get(i).get(0), mueblesT);
                 }
             }
