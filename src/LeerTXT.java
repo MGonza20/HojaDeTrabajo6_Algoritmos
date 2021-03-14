@@ -6,28 +6,7 @@ import java.util.Scanner;
 
 public class LeerTXT {
 
-    private BufferedReader bf;
-
-    public String LeerTXT() {
-        String info = "";
-
-        try {
-            bf = new BufferedReader(new FileReader("ListadoProducto.txt"));
-            String txt = "";
-            String lectura;
-
-            while ((lectura = bf.readLine()) != null) {
-                txt = txt + lectura;
-            }
-            info = txt;
-
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error");
-        }
-        return info;
-    }
-
-    public String LeerTXTop2() {
+    public String LeerTXTop() {
         String info = "";
         try {
             File texto = new File("ListadoProducto.txt");
