@@ -1,36 +1,76 @@
 
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
-public class HashMapp implements MAP {
+public class HashMapp<E> implements MAP {
+    /*
+    HM sirve para crear un diccionario en cual guardamos todas las listas
+    inventario guarda el inventario con su cantidad
+    collecionU se utiliza para guardar el inventario separado por categoria pero sin cantidad
+    coleccion genera un diccionario donde estan los productos y su cantidad
+     */
+    private final HashMap<String, ArrayList<List<String>>> HM;
+    private final HashMap<String, HashMap<String,Integer>> inventario;
+    private final HashMap<String, HashMap<String,Integer>> carritoU;
+    private HashMap<String, ArrayList<String>> coleccionU;
+    private final HashMap<String, Integer> hashU;
+    private final HashMap<String, Integer> coleccionCantB;
+    private final HashMap<String, Integer> coleccionCantF;
+    private final HashMap<String, Integer> coleccionCantL;
+    private final HashMap<String, Integer> coleccionCantM;
+    private final HashMap<String, Integer> coleccionCantS;
+    private final HashMap<String, Integer> coleccionCantC;
+    private final HashMap<String, Integer> coleccionCantCo;
 
-    private HashMap<String, ArrayList<String>> HM;
 
     //Luego completo el constructor
     public HashMapp() {
-        HM =new HashMap<>();
+        HM = new HashMap<String, ArrayList<List<String>>>();
+        coleccionU =new HashMap<>();
+        coleccionCantB =new HashMap<>();
+        coleccionCantM =new HashMap<>();
+        coleccionCantC =new HashMap<>();
+        coleccionCantCo =new HashMap<>();
+        coleccionCantF =new HashMap<>();
+        coleccionCantS =new HashMap<>();
+        coleccionCantL =new HashMap<>();
+        hashU =new HashMap<>();
+        inventario = new HashMap<String, HashMap<String, Integer>>();
+        carritoU = new HashMap<String, HashMap<String, Integer>>();
+
     }
 
-    @Override
-    public void add(String key, String value) {
-        value = value.toUpperCase();
+
+    public void crearHash() {
+
         ArrayList<List<String>> lista = new ArrayList<>();
-        ArrayList<String> lista2 = new ArrayList<>();
+        ArrayList<HashMap<String, Integer>> lista2 = new ArrayList<>();
+
 
         for (int i = 0; i < leerDocu().size(); i++) {
 
             lista.add(Arrays.asList(leerDocu().get(i).split("[|]", 0)));
-           // System.out.println(lista.get(i));
-            HM.put(lista.get(i).get(0), lista2);
+
+            HM.put(lista.get(i).get(0), lista);
+
+
+
         }
+        int f = 0;
+
+
         ArrayList<List<String>> lista3 = new ArrayList<>();
         for (int j= 0; j<lista.size();j++){
             for(int i=0;i<HM.keySet().size();i++){
                 if (lista.get(j).get(0).equals(HM.keySet().toArray()[i])){
 
                     lista3.add(lista.get(j));
+                    HM.put(lista.get(i).get(0), lista3);
 
             }
 
@@ -40,10 +80,16 @@ public class HashMapp implements MAP {
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[0])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[1])){
 
                     bebidas.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), bebidas);
+                    coleccionU.put(lista.get(i).get(0), bebidas);
+                    for(int j = 0; j<bebidas.size();j++){
+                        coleccionCantB.put(bebidas.get(j), 10);
+
+                    }
+                   inventario.put(lista.get(i).get(0),coleccionCantB);
+
                 }
             }
         } catch (Exception e) {
@@ -53,23 +99,35 @@ public class HashMapp implements MAP {
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[1])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[5])){
 
                     frutas.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), frutas);
+                    coleccionU.put(lista.get(i).get(0), frutas);
+                    for(int j = 0; j<frutas.size();j++){
+                        coleccionCantF.put(frutas.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantF);
                 }
             }
         } catch (Exception e) {
 
         }
+
         ArrayList<String> sillones = new ArrayList<>();
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[2])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[6])){
 
                     sillones.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), sillones);
+                    coleccionU.put(lista.get(i).get(0), sillones);
+                    for(int j = 0; j<sillones.size();j++){
+                        coleccionCantS.put(sillones.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantS);
+
                 }
             }
         } catch (Exception e) {
@@ -82,7 +140,12 @@ public class HashMapp implements MAP {
                 if(lista.get(i).get(0).equals(HM.keySet().toArray()[3])){
 
                     condimentos.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), condimentos);
+                    coleccionU.put(lista.get(i).get(0), condimentos);
+                    for(int j = 0; j<condimentos.size();j++){
+                        coleccionCantCo.put(condimentos.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantCo);
                 }
             }
         } catch (Exception e) {
@@ -92,10 +155,15 @@ public class HashMapp implements MAP {
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[4])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[2])){
 
                     lacteos.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), lacteos);
+                    coleccionU.put(lista.get(i).get(0), lacteos);
+                    for(int j = 0; j<lacteos.size();j++){
+                        coleccionCantL.put(lacteos.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantL);
                 }
             }
         } catch (Exception e) {
@@ -105,10 +173,15 @@ public class HashMapp implements MAP {
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[5])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[4])){
 
                     carnes.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), carnes);
+                    coleccionU.put(lista.get(i).get(0), carnes);
+                    for(int j = 0; j<carnes.size();j++){
+                        coleccionCantC.put(carnes.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantC);
                 }
             }
         } catch (Exception e) {
@@ -118,101 +191,85 @@ public class HashMapp implements MAP {
         try {
             for (int i= 0; i<lista3.size();i++){
 
-                if(lista.get(i).get(0).equals(HM.keySet().toArray()[6])){
+                if(lista.get(i).get(0).equals(HM.keySet().toArray()[0])){
 
                     mueblesT.add(lista.get(i).get(1).toUpperCase());
-                    HM.put(lista.get(i).get(0), mueblesT);
+                    coleccionU.put(lista.get(i).get(0), mueblesT);
+                    for(int j = 0; j<mueblesT.size();j++){
+                        coleccionCantM.put(mueblesT.get(j), 10);
+
+                    }
+                    inventario.put(lista.get(i).get(0),coleccionCantM);
+
                 }
             }
         } catch (Exception e) {
 
         }
-       if(key.equals(HM.keySet().toArray()[0])){
-           bebidas.add(value);
-           HM.put(key,bebidas);
-
-       }
-        else if(key.equals(HM.keySet().toArray()[1])){
-            frutas.add(value);
-           HM.put(key,frutas);
-
-        }
-        else if(key.equals(HM.keySet().toArray()[2])){
-            sillones.add(value);
-           HM.put(key,sillones);
-
-        }
-        else if(key.equals(HM.keySet().toArray()[3])){
-            condimentos.add(value);
-           HM.put(key,condimentos);
-        }
-        else if(key.equals(HM.keySet().toArray()[4])){
-            lacteos.add(value);
-           HM.put(key,lacteos);
-        }
-        else if(key.equals(HM.keySet().toArray()[5])){
-            carnes.add(value);
-           HM.put(key,carnes);
-        }
-        else if(key.equals(HM.keySet().toArray()[6])){
-            mueblesT.add(value);
-           HM.put(key,mueblesT);
-        }
-        else{
-           System.out.println("la categoria no esta en la base de datos");
-       }
-        System.out.println(HM.entrySet());
-        System.out.println(HM.keySet());
-
-/*
-
-        for (int j = 0; j<lista.size();j++){
-
-            //System.out.println(HM.keySet().toArray()[j]);
-            for (int i =0; i< HM.keySet().size();i++)
-            {
-                ArrayList<String> lista3 = new ArrayList<>();
-                if (lista.get(j).get(0).equals(HM.keySet().toArray()[i])){
-
-                    lista3.add(lista.get(j).get(1));
 
 
-            }
+        //System.out.println(inventario.entrySet());
+        //System.out.println(inventario.get("Mueble de terraza"));
 
         }
 
 
-           // System.out.println(lista2);
-            //HM.put(lista.get(j).get(0), lista2);
+    @Override
+    public void add(String key, String value, int cant) {
+        value = value.toUpperCase();
+        HashMap<String, Integer> usuario = new HashMap();
+        for (int i =0; i<inventario.keySet().toArray().length; i++){
+            if (inventario.keySet().toArray()[i].equals(key)){
+                if(inventario.get(inventario.keySet().toArray()[i]).keySet().toArray()[i].equals(value)){
+                    hashU.put(value, cant);
+                    carritoU.put(key, hashU);
+                    inventario.get(inventario.keySet().toArray()[i]).put(value,inventario.get(inventario.keySet().toArray()[i]).get(value)-cant);
 
-        }
-        System.out.println(HM.keySet());
-*/
+                    System.out.println(carritoU.entrySet());
 
+                    System.out.println(inventario.entrySet());
 
-/*
-        for (String key1 : HM.keySet()) {
-            if (key1.equals(key)) {
-                lista.add(value);
-                HM.put(key, lista);
+                }
+            }else{
+                //System.out.println("Categoria no esta en el sistema");
             }
         }
-        */
-
-        }
 
 
-        @Override
+    }
+
+    @Override
         public String showAllInfo () {
-            String data = "";
-            return data;
+            System.out.println("*******inventario*******");
+            for (int j=0; j<inventario.get(inventario.keySet().toArray()[0]).size();j++){
+                System.out.println(inventario.keySet().toArray()[0]+"------>"+ coleccionCantM.keySet().toArray()[j] + "--" + coleccionCantM.get(coleccionCantM.keySet().toArray()[j]));
+            }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[1]).size();j++){
+            System.out.println(inventario.keySet().toArray()[1]+"------>"+ coleccionCantB.keySet().toArray()[j] + "--Cantidad--" + coleccionCantB.get(coleccionCantB.keySet().toArray()[j]));
+        }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[2]).size();j++){
+            System.out.println(inventario.keySet().toArray()[2]+"------>"+ coleccionCantL.keySet().toArray()[j] + "--" + coleccionCantL.get(coleccionCantL.keySet().toArray()[j]));
+        }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[3]).size();j++){
+            System.out.println(inventario.keySet().toArray()[3]+"------>"+ coleccionCantCo.keySet().toArray()[j] + "--" + coleccionCantCo.get(coleccionCantCo.keySet().toArray()[j]));
+        }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[4]).size();j++){
+            System.out.println(inventario.keySet().toArray()[4]+"------>"+ coleccionCantC.keySet().toArray()[j] + "--" + coleccionCantC.get(coleccionCantC.keySet().toArray()[j]));
+        }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[5]).size();j++){
+            System.out.println(inventario.keySet().toArray()[5]+"------>"+ coleccionCantF.keySet().toArray()[j] + "--" + coleccionCantF.get(coleccionCantF.keySet().toArray()[j]));
+        }
+        for (int j=0; j<inventario.get(inventario.keySet().toArray()[6]).size();j++){
+            System.out.println(inventario.keySet().toArray()[6]+"------>"+ coleccionCantS.keySet().toArray()[j] + "--" + coleccionCantS.get(coleccionCantS.keySet().toArray()[j]));
+        }
+            return"j";
         }
 
         @Override
-        public String showCategoryInfo (String producto){
-            String data = "";
+        public Object showCategoryInfo (String producto){
+            Object data = "";
 
-            for (String i : HM.keySet()) {
+            for (Object i : HM.keySet()) {
                 if (HM.get(i).equals(producto)) {
                     data = i;
                     System.out.println("key: " + i + " value: " + HM.get(i));
@@ -246,5 +303,25 @@ public class HashMapp implements MAP {
 
             return operacion;
         }
+    public static void aniadirArchivo(String categoria, String producto) {
+        FileWriter flwriter = null;
+        try {//además de la ruta del archivo recibe un parámetro de tipo boolean, que le indican que se va añadir más registros
+            flwriter = new FileWriter("ListadoProducto.txt", true);
+            BufferedWriter bfwriter = new BufferedWriter(flwriter);
+            bfwriter.write( categoria + "|  " + producto + "\n");
+            bfwriter.close();
+            System.out.println("Archivo modificado satisfactoriamente..");
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (flwriter != null) {
+                try {
+                    flwriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     }

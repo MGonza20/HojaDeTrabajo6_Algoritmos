@@ -1,10 +1,10 @@
 public interface MAP {
 
-    public void add(String key, String value);
+    public void add(String key, String value, int cant);
 
     public String showAllInfo();
 
-    public String showCategoryInfo(String producto);
+    public Object showCategoryInfo(String producto);
 
 
 
